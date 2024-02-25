@@ -30,11 +30,10 @@ function App() {
           "Content-Type": "application/json",
         };
 
-        const requestData = {};
-        requestData["action"] = "get_items";
-        // requestData["params"] = {};
-        // requestData["params"]["offset"] = 10;
-        // requestData["params"]["limit"] = 3;
+        const requestData = {
+          "action": "get_ids",
+          "params": { "offset": 10, "limit": 50 },
+        };
 
         const response = await axios.post(baseUrl, requestData, {
           headers: headers,
