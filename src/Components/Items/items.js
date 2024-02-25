@@ -1,6 +1,7 @@
+import { Pagination } from "../Pagination/pagination";
 import "./items.css";
 
-export const Items = ({items}) => {
+export const Items = ({items, currentPage, setCurrentPage, handldeClick }) => {
   let itemsList = items.map((item, index) => {
     return (
       <li
@@ -14,5 +15,14 @@ export const Items = ({items}) => {
       </li>
     );
   });
-  return <ul className="myUL">{itemsList}</ul>;
+  return (
+    <div>
+      <ul className="myUL">{itemsList}</ul>
+      <Pagination
+        items={items}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        handldeClick={handldeClick}
+      />
+    </div>);
 };
