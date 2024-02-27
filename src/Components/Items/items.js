@@ -1,7 +1,20 @@
+
 import { Pagination } from "../Pagination/pagination";
+import { PopupMenu } from "../popup-menu/popup-menu";
 import "./items.css";
 
-export const Items = ({items, currentPage, setCurrentPage, handldeClick }) => {
+export const Items = ({
+  items, 
+  currentPage, 
+  setCurrentPage, 
+  handldeClick,           
+  names,
+  setNames,
+  prices,
+  setPrices,
+  brands,
+  setBrands}) => {
+
   let itemsList = items.map((item, index) => {
     return (
       <li
@@ -17,6 +30,14 @@ export const Items = ({items, currentPage, setCurrentPage, handldeClick }) => {
   });
   return (
     <div>
+      <PopupMenu 
+        names={names}
+        setNames={setNames}
+        prices={prices}
+        setPrices={setPrices}
+        brands={brands}
+        setBrands={setBrands}
+      />
       <ul className="myUL">{itemsList}</ul>
       <Pagination
         items={items}
