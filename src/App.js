@@ -15,8 +15,9 @@ function App() {
   const [names, setNames] = useState([]);
   const [prices, setPrices] = useState([]);
   const [brands, setBrands] = useState([]);
+  let [errorMessage, setErrorMessage] = useState("");
 
-  const getOriginalArr = (items) => {
+  const getOriginalIds = (items) => {
     const uniqueObjects = items.filter((obj, index, self) => 
       index === self.findIndex((t) => (
           t.id === obj.id
@@ -47,6 +48,7 @@ function App() {
   };
 
   useEffect(() => {
+    setErrorMessage("");
     getIds({currentPage: currentPage})
       .then((res) => {
         setIds(res.result);
@@ -56,10 +58,28 @@ function App() {
         // console.log(res);
         getItems(res)
           .then((res) => {
-            setItems(getOriginalArr(res.result));
+            setItems(getOriginalIds(res.result));
             setIsLoading(false)
             return res;
           })
+          .catch((error) => {
+            setIsLoading(false);
+            setErrorMessage("Something get wrong. Please, try again later");
+            if (error.response && error.response.status === 401) {
+              console.error("Ошибка аутентификации: Некорректная авторизационная строка");
+            } else {
+              console.error("Ошибка при получении данных: ", error);
+            }
+          })
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setErrorMessage("Something get wrong. Please, try again later");
+        if (error.response && error.response.status === 401) {
+          console.error("Ошибка аутентификации: Некорректная авторизационная строка");
+        } else {
+          console.error("Ошибка при получении данных: ", error);
+        }
       })
       getFields({currentPage: currentPage, field: "brand"})
         .then((res) => {
@@ -69,6 +89,15 @@ function App() {
         .then((result) => {
             setBrands(getUniqueArr({arr: result}));
         })
+        .catch((error) => {
+          setIsLoading(false);
+          setErrorMessage("Something get wrong. Please, try again later");
+          if (error.response && error.response.status === 401) {
+            console.error("Ошибка аутентификации: Некорректная авторизационная строка");
+          } else {
+            console.error("Ошибка при получении данных: ", error);
+          }
+        })
       getFields({currentPage: currentPage, field: "product"})
         .then((res) => {
             // console.log("initial", res);
@@ -77,6 +106,15 @@ function App() {
         .then((result) => {
             setNames(getUniqueArr({arr: result}));
         })
+        .catch((error) => {
+          setIsLoading(false);
+          setErrorMessage("Something get wrong. Please, try again later");
+          if (error.response && error.response.status === 401) {
+            console.error("Ошибка аутентификации: Некорректная авторизационная строка");
+          } else {
+            console.error("Ошибка при получении данных: ", error);
+          }
+        })
       getFields({currentPage: currentPage, field: "price"})
         .then((res) => {
             // console.log("initial", res);
@@ -84,6 +122,15 @@ function App() {
         })
         .then((result) => {
             setPrices(getUniqueArr({arr: result}));
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setErrorMessage("Something get wrong. Please, try again later");
+          if (error.response && error.response.status === 401) {
+            console.error("Ошибка аутентификации: Некорректная авторизационная строка");
+          } else {
+            console.error("Ошибка при получении данных: ", error);
+          }
         })
   }, [currentPage]);
 
@@ -127,6 +174,7 @@ function App() {
         ""
       )}
       {loading && <Loader />}
+      {errorMessage ? <div style={{ color: "red" }}>{errorMessage}</div> : ""}
     </div>
   );
 }

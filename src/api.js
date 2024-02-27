@@ -14,8 +14,8 @@ let dd =
   now.getDate().toString().length === 1
     ? "0" + now.getDate().toString()
     : now.getDate().toString();
-let date = yyyy + mm + dd;
-// let date = "20240225";
+// let date = yyyy + mm + dd;
+let date = "20240227";
 // console.log(date);
 let authString = md5(password + "_" + date);
 
@@ -42,14 +42,6 @@ export const getIds = ({currentPage}) => {
 
         return response;
       })
-      .catch(error => {
-        if (error.response && error.response.status === 401) {
-          console.error("Ошибка аутентификации: Некорректная авторизационная строка");
-        } else {
-          console.error("Ошибка при получении данных: ", error);
-        }
-        throw error;
-      });
   };
 
   export const getItems = (ids) => {
@@ -74,14 +66,6 @@ export const getIds = ({currentPage}) => {
         // console.log(response);
         return response;
       })
-      .catch(error => {
-        if (error.response && error.response.status === 401) {
-          console.error("Ошибка аутентификации: Некорректная авторизационная строка");
-        } else {
-          console.error("Ошибка при получении данных: ", error);
-        }
-        throw error;
-      });
   };
 
   export const getFields = ({currentPage, field}) => {
@@ -108,12 +92,4 @@ export const getIds = ({currentPage}) => {
 
         return response;
       })
-      .catch(error => {
-        if (error.response && error.response.status === 401) {
-          console.error("Ошибка аутентификации: Некорректная авторизационная строка");
-        } else {
-          console.error("Ошибка при получении данных: ", error);
-        }
-        throw error;
-      });
   };
