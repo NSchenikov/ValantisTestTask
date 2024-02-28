@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getIds, getItems, getFields } from "./api";
+import { getIds, getItems, getFields, filterItems } from "./api";
 import {Items} from './Components/Items/items'
 import { Loader } from "./Components/Loader/loader";
 import {Header} from "./Components/Header/header"
@@ -16,6 +16,15 @@ function App() {
   const [prices, setPrices] = useState([]);
   const [brands, setBrands] = useState([]);
   let [errorMessage, setErrorMessage] = useState("");
+  const [chosenName, setChosenName] = useState("");
+  const [chosenPrice, setChosenPrice] = useState("");
+  const [chosenBrand, setChosenBrand] = useState("");
+  const [initialRender, setInitialRender] = useState(true);
+  const [nameIsOpen, setNameIsOpen] = useState(false);
+  const [priceIsOpen, setPriceIsOpen] = useState(false);
+  const [brandIsOpen, setBrandIsOpen] = useState(false);
+  // const [priceFilteredIds, setPriceFilteredIds] = useState([]);
+
 
   const getOriginalIds = (items) => {
     const uniqueObjects = items.filter((obj, index, self) => 
@@ -24,6 +33,14 @@ function App() {
       ))
     );
     return uniqueObjects
+  }
+
+  const sortArray = (arr) => {
+    arr.sort(function(a, b) {
+      return a - b;
+    })
+
+    return arr
   }
 
   const getUniqueArr = ({arr}) => {
@@ -37,6 +54,7 @@ function App() {
           return value;
         }
       });
+
       return updatedArray;
   }
 
@@ -46,6 +64,21 @@ function App() {
     setItems([]);
     setIsLoading(true);
   };
+
+  const errorProcessing = (error) => {
+    setIsLoading(false);
+    setItems([]);
+    setErrorMessage("Something get wrong. Please, try again later");
+    if (error.response && error.response.status === 401) {
+      console.error("Ошибка аутентификации: Некорректная авторизационная строка");
+    } else {
+      console.error("Ошибка при получении данных: ", error);
+    }
+  }
+
+  useEffect(() => {
+    setInitialRender(false);
+  }, [])
 
   useEffect(() => {
     setErrorMessage("");
@@ -63,23 +96,11 @@ function App() {
             return res;
           })
           .catch((error) => {
-            setIsLoading(false);
-            setErrorMessage("Something get wrong. Please, try again later");
-            if (error.response && error.response.status === 401) {
-              console.error("Ошибка аутентификации: Некорректная авторизационная строка");
-            } else {
-              console.error("Ошибка при получении данных: ", error);
-            }
+            errorProcessing(error);
           })
       })
       .catch((error) => {
-        setIsLoading(false);
-        setErrorMessage("Something get wrong. Please, try again later");
-        if (error.response && error.response.status === 401) {
-          console.error("Ошибка аутентификации: Некорректная авторизационная строка");
-        } else {
-          console.error("Ошибка при получении данных: ", error);
-        }
+        errorProcessing(error);
       })
       getFields({currentPage: currentPage, field: "brand"})
         .then((res) => {
@@ -90,13 +111,7 @@ function App() {
             setBrands(getUniqueArr({arr: result}));
         })
         .catch((error) => {
-          setIsLoading(false);
-          setErrorMessage("Something get wrong. Please, try again later");
-          if (error.response && error.response.status === 401) {
-            console.error("Ошибка аутентификации: Некорректная авторизационная строка");
-          } else {
-            console.error("Ошибка при получении данных: ", error);
-          }
+          errorProcessing(error);
         })
       getFields({currentPage: currentPage, field: "product"})
         .then((res) => {
@@ -107,13 +122,7 @@ function App() {
             setNames(getUniqueArr({arr: result}));
         })
         .catch((error) => {
-          setIsLoading(false);
-          setErrorMessage("Something get wrong. Please, try again later");
-          if (error.response && error.response.status === 401) {
-            console.error("Ошибка аутентификации: Некорректная авторизационная строка");
-          } else {
-            console.error("Ошибка при получении данных: ", error);
-          }
+          errorProcessing(error);
         })
       getFields({currentPage: currentPage, field: "price"})
         .then((res) => {
@@ -121,17 +130,12 @@ function App() {
             return res.result;
         })
         .then((result) => {
-            setPrices(getUniqueArr({arr: result}));
+            setPrices(sortArray(getUniqueArr({arr: result})));
         })
         .catch((error) => {
-          setIsLoading(false);
-          setErrorMessage("Something get wrong. Please, try again later");
-          if (error.response && error.response.status === 401) {
-            console.error("Ошибка аутентификации: Некорректная авторизационная строка");
-          } else {
-            console.error("Ошибка при получении данных: ", error);
-          }
+          errorProcessing(error);
         })
+
   }, [currentPage]);
 
   // useEffect(() => {
@@ -154,6 +158,32 @@ function App() {
   //   console.log(names);
   // }, [names])
 
+  useEffect(() => {
+    if (!initialRender) {
+      setItems([]);
+      setErrorMessage('');
+      setIsLoading(true);
+      filterItems(chosenPrice)
+      .then((res) => {
+        return res.result;
+      })
+      .then((res) => {
+        getItems(res)
+        .then((result) => {
+          setIsLoading(false);
+          setItems(result.result);
+          // console.log(result);
+        })
+        .catch((error) => {
+          errorProcessing(error);
+        })
+      })
+      .catch((error) => {
+        errorProcessing(error);
+      })
+    }
+  }, [chosenPrice])
+
   return (
     <div className="App">
       <Header/>
@@ -164,17 +194,23 @@ function App() {
           setCurrentPage={setCurrentPage}
           handldeClick={handldeClick}
           names={names}
-          setNames={setNames}
           prices={prices}
-          setPrices={setPrices}
           brands={brands}
-          setBrands={setBrands}
+          setChosenName={setChosenName}
+          setChosenPrice={setChosenPrice}
+          setChosenBrand={setChosenBrand}
+          nameIsOpen={nameIsOpen}
+          setNameIsOpen={setNameIsOpen}
+          priceIsOpen={priceIsOpen}
+          setPriceIsOpen={setPriceIsOpen}
+          brandIsOpen={brandIsOpen}
+          setBrandIsOpen={setBrandIsOpen}
         />
       ) : (
         ""
       )}
       {loading && <Loader />}
-      {errorMessage ? <div style={{ color: "red" }}>{errorMessage}</div> : ""}
+      {errorMessage ? <div style={{ color: "red", marginTop: "180px" }}>{errorMessage}</div> : ""}
     </div>
   );
 }

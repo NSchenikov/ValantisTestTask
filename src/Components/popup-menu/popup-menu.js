@@ -1,19 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
-import { getFields } from "../../api";
 import "./popup-menu.css";
 
 export const PopupMenu = ({ 
     names,
-    setNames,
     prices,
-    setPrices,
     brands,
-    setBrands
+    setChosenName,
+    setChosenPrice,
+    setChosenBrand,
+    nameIsOpen,
+    setNameIsOpen,
+    priceIsOpen,
+    setPriceIsOpen,
+    brandIsOpen,
+    setBrandIsOpen,
 }) => {
-
-  const [nameIsOpen, setNameIsOpen] = useState(false);
-  const [priceIsOpen, setPriceIsOpen] = useState(false);
-  const [brandIsOpen, setBrandIsOpen] = useState(false);
 
   const savedEvent = useRef(null);
 
@@ -54,7 +55,12 @@ export const PopupMenu = ({
         <div className={`menu-options ${priceIsOpen ? "open" : ""}`}>
             {prices.map((item, index) => {
                     return (
-                        <div className="menu-item" key={index}>
+                        <div 
+                            className="menu-item" 
+                            key={index} 
+                            onClick={(e) => {setChosenPrice(item);
+                            setPriceIsOpen(false);
+                            }}>
                             {item}
                         </div>
                     )

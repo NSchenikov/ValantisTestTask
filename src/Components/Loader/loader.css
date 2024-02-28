@@ -11,6 +11,7 @@
     width: 0;
     height: 0;
     margin: 8px;
+    margin-top: 150px;
     box-sizing: border-box;
     border: 32px solid #31b2c3;
     border-color: #31b2c3 transparent #31b2c3 transparent;

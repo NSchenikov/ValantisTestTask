@@ -14,8 +14,8 @@ let dd =
   now.getDate().toString().length === 1
     ? "0" + now.getDate().toString()
     : now.getDate().toString();
-// let date = yyyy + mm + dd;
-let date = "20240227";
+let date = yyyy + mm + dd;
+// let date = "20240227";
 // console.log(date);
 let authString = md5(password + "_" + date);
 
@@ -81,6 +81,28 @@ export const getIds = ({currentPage}) => {
         "field": field,
         "offset": offset,
         "limit": 50,
+      },
+    };
+  
+    return axios.post(baseUrl, requestData, { headers: headers })
+      .then(response => {
+        return response.data;
+      })
+      .then(response => {
+
+        return response;
+      })
+  };
+
+  export const filterItems = (chosenPrice) => {
+    const headers = {
+      "X-Auth": authString,
+      "Content-Type": "application/json",
+    };
+    const requestData = {
+      "action": "filter",
+      "params": {
+        "price": chosenPrice,
       },
     };
   

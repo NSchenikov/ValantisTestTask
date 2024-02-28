@@ -9,11 +9,18 @@ export const Items = ({
   setCurrentPage, 
   handldeClick,           
   names,
-  setNames,
   prices,
-  setPrices,
   brands,
-  setBrands}) => {
+  setChosenName,
+  setChosenPrice,
+  setChosenBrand,
+  nameIsOpen,
+  setNameIsOpen,
+  priceIsOpen,
+  setPriceIsOpen,
+  brandIsOpen,
+  setBrandIsOpen,
+}) => {
 
   let itemsList = items.map((item, index) => {
     return (
@@ -32,11 +39,17 @@ export const Items = ({
     <div>
       <PopupMenu 
         names={names}
-        setNames={setNames}
         prices={prices}
-        setPrices={setPrices}
         brands={brands}
-        setBrands={setBrands}
+        setChosenName={setChosenName}
+        setChosenPrice={setChosenPrice}
+        setChosenBrand={setChosenBrand}
+        nameIsOpen={nameIsOpen}
+        setNameIsOpen={setNameIsOpen}
+        priceIsOpen={priceIsOpen}
+        setPriceIsOpen={setPriceIsOpen}
+        brandIsOpen={brandIsOpen}
+        setBrandIsOpen={setBrandIsOpen}
       />
       <ul className="myUL">{itemsList}</ul>
       <Pagination
