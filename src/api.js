@@ -80,7 +80,7 @@ export const getIds = ({currentPage}) => {
       "params": {
         "field": field,
         "offset": offset,
-        "limit": 50,
+        "limit": 9000,
       },
     };
   
@@ -125,6 +125,28 @@ export const getIds = ({currentPage}) => {
       "action": "filter",
       "params": {
         "product": chosenName,
+      },
+    };
+  
+    return axios.post(baseUrl, requestData, { headers: headers })
+      .then(response => {
+        return response.data;
+      })
+      .then(response => {
+
+        return response;
+      })
+  };
+
+  export const filterItemsByBrand = (chosenBrand) => {
+    const headers = {
+      "X-Auth": authString,
+      "Content-Type": "application/json",
+    };
+    const requestData = {
+      "action": "filter",
+      "params": {
+        "brand": chosenBrand,
       },
     };
   

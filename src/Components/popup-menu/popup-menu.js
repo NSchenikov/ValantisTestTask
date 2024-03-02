@@ -85,7 +85,11 @@ export const PopupMenu = ({
         <div className={`menu-options ${brandIsOpen ? "open" : ""}`}>
             {brands.map((item, index) => {
                 return (
-                    <div className="menu-item" key={index}>
+                    <div className="menu-item" key={index}
+                    onClick={(e) => {
+                        setChosenBrand(item);
+                        setBrandIsOpen(false);
+                        }}>
                         {item}
                     </div>
                 )

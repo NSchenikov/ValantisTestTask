@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getIds, getItems, getFields, filterItemsByPrice, filterItemsByName } from "./api";
+import { getIds, getItems, getFields, filterItemsByPrice, filterItemsByName, filterItemsByBrand } from "./api";
 import {Items} from './Components/Items/items'
 import { Loader } from "./Components/Loader/loader";
 import {Header} from "./Components/Header/header"
@@ -25,7 +25,7 @@ function App() {
   const [brandIsOpen, setBrandIsOpen] = useState(false);
   // const [priceFilteredIds, setPriceFilteredIds] = useState([]);
 
-  const products = ["кольцо", "колье", "серьги", "браслет", "комплект", "ложка", "кулон", "брошь", "пусеты", "цепочка"]
+  const products = ["кольцо", "колье", "серьги", "браслет", "комплект", "ложка", "кулон", "брошь", "пусеты", "цепочка", "подвес", "бусы", "подстаканник"]
 
 
   const getOriginalIds = (items) => {
@@ -49,13 +49,9 @@ function App() {
     const uniqueArr = arr.filter((value, index, self) => {
         return self.indexOf(value) === index;
       });
-      const updatedArray = uniqueArr.map((value) => {
-        if (value === null) {
-          return "with no point";
-        } else {
-          return value;
-        }
-      });
+      const updatedArray = uniqueArr.filter(value =>
+        value !== null
+      );
 
       return updatedArray;
   }
@@ -106,7 +102,7 @@ function App() {
       })
       getFields({currentPage: currentPage, field: "brand"})
         .then((res) => {
-            // console.log("initial", res);
+            console.log("brands", res);
             return res.result;
         })
         .then((result) => {
@@ -117,7 +113,7 @@ function App() {
         })
       getFields({currentPage: currentPage, field: "product"})
         .then((res) => {
-            // console.log("initial", res);
+          console.log("products", res);
             return res.result;
         })
         .then((result) => {
@@ -212,10 +208,36 @@ function App() {
     }
   }, [chosenName])
 
+  useEffect(() => {
+    if (!initialRender) {
+      setItems([]);
+      setErrorMessage('');
+      setIsLoading(true);
+      filterItemsByBrand(chosenBrand)
+      .then((res) => {
+        return res.result;
+      })
+      .then((res) => {
+        getItems(res)
+        .then((result) => {
+          setIsLoading(false);
+          setItems(result.result);
+          // console.log(result);
+        })
+        .catch((error) => {
+          errorProcessing(error);
+        })
+      })
+      .catch((error) => {
+        errorProcessing(error);
+      })
+    }
+  }, [chosenBrand])
+
   return (
     <div className="App">
       <Header/>
-            {items && brands ? (
+            {items && brands && names && prices ? (
         <Items
           items={items}
           currentPage={currentPage}
