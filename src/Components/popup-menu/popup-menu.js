@@ -14,6 +14,7 @@ export const PopupMenu = ({
     setPriceIsOpen,
     brandIsOpen,
     setBrandIsOpen,
+    products,
 }) => {
 
   const savedEvent = useRef(null);
@@ -32,9 +33,12 @@ export const PopupMenu = ({
             Filter by name
         </button>
         <div className={`menu-options ${nameIsOpen ? "open" : ""}`}>
-                {names.map((item, index) => {
+                {products.map((item, index) => {
                     return (
-                        <div className="menu-item" key={index}>
+                        <div className="menu-item" key={index}                             onClick={(e) => {
+                            setChosenName(item);
+                            setNameIsOpen(false);
+                            }}>
                             {item}
                         </div>
                     )

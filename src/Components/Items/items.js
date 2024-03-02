@@ -20,6 +20,7 @@ export const Items = ({
   setPriceIsOpen,
   brandIsOpen,
   setBrandIsOpen,
+  products,
 }) => {
 
   let itemsList = items.map((item, index) => {
@@ -50,6 +51,7 @@ export const Items = ({
         setPriceIsOpen={setPriceIsOpen}
         brandIsOpen={brandIsOpen}
         setBrandIsOpen={setBrandIsOpen}
+        products={products}
       />
       <ul className="myUL">{itemsList}</ul>
       <Pagination

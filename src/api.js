@@ -94,7 +94,7 @@ export const getIds = ({currentPage}) => {
       })
   };
 
-  export const filterItems = (chosenPrice) => {
+  export const filterItemsByPrice = (chosenPrice) => {
     const headers = {
       "X-Auth": authString,
       "Content-Type": "application/json",
@@ -103,6 +103,28 @@ export const getIds = ({currentPage}) => {
       "action": "filter",
       "params": {
         "price": chosenPrice,
+      },
+    };
+  
+    return axios.post(baseUrl, requestData, { headers: headers })
+      .then(response => {
+        return response.data;
+      })
+      .then(response => {
+
+        return response;
+      })
+  };
+
+  export const filterItemsByName = (chosenName) => {
+    const headers = {
+      "X-Auth": authString,
+      "Content-Type": "application/json",
+    };
+    const requestData = {
+      "action": "filter",
+      "params": {
+        "product": chosenName,
       },
     };
   

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getIds, getItems, getFields, filterItems } from "./api";
+import { getIds, getItems, getFields, filterItemsByPrice, filterItemsByName } from "./api";
 import {Items} from './Components/Items/items'
 import { Loader } from "./Components/Loader/loader";
 import {Header} from "./Components/Header/header"
@@ -24,6 +24,8 @@ function App() {
   const [priceIsOpen, setPriceIsOpen] = useState(false);
   const [brandIsOpen, setBrandIsOpen] = useState(false);
   // const [priceFilteredIds, setPriceFilteredIds] = useState([]);
+
+  const products = ["кольцо", "колье", "серьги", "браслет", "комплект", "ложка", "кулон", "брошь", "пусеты", "цепочка"]
 
 
   const getOriginalIds = (items) => {
@@ -163,7 +165,7 @@ function App() {
       setItems([]);
       setErrorMessage('');
       setIsLoading(true);
-      filterItems(chosenPrice)
+      filterItemsByPrice(chosenPrice)
       .then((res) => {
         return res.result;
       })
@@ -183,6 +185,32 @@ function App() {
       })
     }
   }, [chosenPrice])
+
+  useEffect(() => {
+    if (!initialRender) {
+      setItems([]);
+      setErrorMessage('');
+      setIsLoading(true);
+      filterItemsByName(chosenName)
+      .then((res) => {
+        return res.result;
+      })
+      .then((res) => {
+        getItems(res)
+        .then((result) => {
+          setIsLoading(false);
+          setItems(result.result);
+          // console.log(result);
+        })
+        .catch((error) => {
+          errorProcessing(error);
+        })
+      })
+      .catch((error) => {
+        errorProcessing(error);
+      })
+    }
+  }, [chosenName])
 
   return (
     <div className="App">
@@ -205,6 +233,7 @@ function App() {
           setPriceIsOpen={setPriceIsOpen}
           brandIsOpen={brandIsOpen}
           setBrandIsOpen={setBrandIsOpen}
+          products={products}
         />
       ) : (
         ""
