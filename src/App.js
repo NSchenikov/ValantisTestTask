@@ -65,7 +65,7 @@ function App() {
 
   const errorProcessing = (error) => {
     setIsLoading(false);
-    setItems([]);
+    // setItems([]);
     setErrorMessage("Something get wrong. Please, try again later");
     if (error.response && error.response.status === 401) {
       console.error("Ошибка аутентификации: Некорректная авторизационная строка");
@@ -102,7 +102,7 @@ function App() {
       })
       getFields({currentPage: currentPage, field: "brand"})
         .then((res) => {
-            console.log("brands", res);
+            // console.log("brands", res);
             return res.result;
         })
         .then((result) => {
@@ -113,7 +113,7 @@ function App() {
         })
       getFields({currentPage: currentPage, field: "product"})
         .then((res) => {
-          console.log("products", res);
+          // console.log("products", res);
             return res.result;
         })
         .then((result) => {
@@ -140,9 +140,9 @@ function App() {
   //   console.log(ids);
   // }, [ids])
 
-  // useEffect(() => {
-  //   console.log(items);
-  // }, [items])
+  useEffect(() => {
+    console.log(items);
+  }, [items])
 
   // useEffect(() => {
   //   console.log(brands);
@@ -168,8 +168,8 @@ function App() {
       .then((res) => {
         getItems(res)
         .then((result) => {
-          setIsLoading(false);
           setItems(result.result);
+          setIsLoading(false);
           // console.log(result);
         })
         .catch((error) => {

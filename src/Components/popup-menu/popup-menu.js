@@ -17,7 +17,22 @@ export const PopupMenu = ({
     products,
 }) => {
 
-  const savedEvent = useRef(null);
+    const [log, setLog] = useState("");
+    const [prevVal, setPrevVal] = useState(1100);
+    const setLogIfArrowClicked = e => {
+        let currentVal = parseInt(e.target.value);
+        if (currentVal > prevVal) {
+          if (currentVal - prevVal === 100) {
+            setLog(`${log}+`);
+          } else {
+            setLog(`${log}`);
+          }
+        } else {
+          setLog(`${log}`);
+        }
+        setPrevVal(currentVal);
+        setChosenPrice(currentVal);
+    };
 
   return (
     <div className="popup-menus">
@@ -45,32 +60,12 @@ export const PopupMenu = ({
                 })}
         </div>
         </div>
-        <div className="popup-menu">
-        <button
-            className="sort-button"
-            onClick={() => {
-                setPriceIsOpen(!priceIsOpen);
-                setNameIsOpen(false);
-                setBrandIsOpen(false);
-            }}
-        >
-            Filter by price
-        </button>
-        <div className={`menu-options ${priceIsOpen ? "open" : ""}`}>
-            {prices.map((item, index) => {
-                    return (
-                        <div 
-                            className="menu-item" 
-                            key={index} 
-                            onClick={(e) => {setChosenPrice(item);
-                            setPriceIsOpen(false);
-                            }}>
-                            {item}
-                        </div>
-                    )
-            })}
-        </div>
-        </div>
+        <input 
+            onChange={setLogIfArrowClicked}
+            type="number" 
+            value={prevVal}
+            step={100}
+        ></input>
         <div className="popup-menu">
         <button
             className="sort-button"
