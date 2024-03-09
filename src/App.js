@@ -23,7 +23,6 @@ function App() {
   const [nameIsOpen, setNameIsOpen] = useState(false);
   const [priceIsOpen, setPriceIsOpen] = useState(false);
   const [brandIsOpen, setBrandIsOpen] = useState(false);
-  // const [priceFilteredIds, setPriceFilteredIds] = useState([]);
 
   const products = ["кольцо", "колье", "серьги", "браслет", "комплект", "ложка", "кулон", "брошь", "пусеты", "цепочка", "подвес", "бусы", "подстаканник"]
 
@@ -256,6 +255,8 @@ function App() {
           brandIsOpen={brandIsOpen}
           setBrandIsOpen={setBrandIsOpen}
           products={products}
+          loading={loading}
+          setIsLoading={setIsLoading}
         />
       ) : (
         ""

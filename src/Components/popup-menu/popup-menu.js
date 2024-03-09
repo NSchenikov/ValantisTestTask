@@ -15,6 +15,8 @@ export const PopupMenu = ({
     brandIsOpen,
     setBrandIsOpen,
     products,
+    loading, 
+    setIsLoading,
 }) => {
 
     const [log, setLog] = useState("");
@@ -65,6 +67,7 @@ export const PopupMenu = ({
             type="number" 
             value={prevVal}
             step={100}
+            disabled={loading ? "disabled" : ''}
         ></input>
         <div className="popup-menu">
         <button

@@ -21,6 +21,8 @@ export const Items = ({
   brandIsOpen,
   setBrandIsOpen,
   products,
+  loading, 
+  setIsLoading,
 }) => {
 
   let itemsList = items.map((item, index) => {
@@ -52,6 +54,8 @@ export const Items = ({
         brandIsOpen={brandIsOpen}
         setBrandIsOpen={setBrandIsOpen}
         products={products}
+        loading={loading}
+        setIsLoading={setIsLoading}
       />
       <ul className="myUL">{itemsList}</ul>
       <Pagination
