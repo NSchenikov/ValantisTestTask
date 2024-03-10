@@ -1,70 +1,12 @@
-# Getting Started with Create React App
+Тестовое задание компании Valantis
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ссылка на задание: https://github.com/ValantisJewelry/TestTaskValantis
+Документация к API: https://github.com/ValantisJewelry/TestTaskValantis/blob/main/API.md
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Приложение представляет собой простейший вариант реализации магазина ювелирных товаров. 
+При первичном рендере с API подгружаются все товары магазина с работающей пагинацией. В карточке товара отображается id товара, название товара, цента товара и бренд товара. Если в поле brand с бекенда возвращается null, то в в графе бренд карточки товара обозначается: нет информации о бренде товара. 
+Есть возможность фильтрации товаров по названию, цене и бренду. 
+Вся фильтрация работает исключительно на бекенде и возможность фильтрации сразу по нескольким полям отсутсвует, так как filter API может работать только с одним параметром. Filter API так же не работает с параметрами limit и offset, возвращает сразу все id товаров, соответствующих критериям фильтрации, поэтому, пагинация после фильтрации, к сожалению, тоже невозможна (в данном проекте в связи с такой проблемой компонент Pagination не рендерится, если пользователь кликнул хотя бы на один фильтр). 
+Так же реализована кнопка reset, которая запускает API getIds и getItems, отрисовывая все товары магазина с пагинацией и отменяя выбранные пользователем фильтры.
+Фильтр по цене работает как input type="number" с возможностью смены цены как с помощью стрелочек, так и с помощью ввода с клавиатуры. Пока идет запрос поле инпута неактивно (фича реализована с помощью lodash debounce).
+Реализован лоадер, обработаны ошибки. В случае, если API возвращает ошибку сервера (код 500), пользователь видит сообщение "Something get wrong. Please, try again later".
