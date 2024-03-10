@@ -23,6 +23,7 @@ export const Items = ({
   products,
   loading, 
   setIsLoading,
+  setResetCount,
 }) => {
 
   let itemsList = items.map((item, index) => {
@@ -56,6 +57,10 @@ export const Items = ({
         products={products}
         loading={loading}
         setIsLoading={setIsLoading}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        setResetCount={setResetCount}
+        handldeClick={handldeClick}
       />
       <ul className="myUL">{itemsList}</ul>
       <Pagination

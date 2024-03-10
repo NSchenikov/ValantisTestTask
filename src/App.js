@@ -23,6 +23,7 @@ function App() {
   const [nameIsOpen, setNameIsOpen] = useState(false);
   const [priceIsOpen, setPriceIsOpen] = useState(false);
   const [brandIsOpen, setBrandIsOpen] = useState(false);
+  const [resetCount, setResetCount] = useState(0);
 
   const products = ["кольцо", "колье", "серьги", "браслет", "комплект", "ложка", "кулон", "брошь", "пусеты", "цепочка", "подвес", "бусы", "подстаканник"]
 
@@ -78,6 +79,7 @@ function App() {
   }, [])
 
   useEffect(() => {
+    console.log(currentPage);
     setErrorMessage("");
     getIds({currentPage: currentPage})
       .then((res) => {
@@ -133,7 +135,7 @@ function App() {
           errorProcessing(error);
         })
 
-  }, [currentPage]);
+  }, [currentPage, resetCount]);
 
   // useEffect(() => {
   //   console.log(ids);
@@ -257,6 +259,7 @@ function App() {
           products={products}
           loading={loading}
           setIsLoading={setIsLoading}
+          setResetCount={setResetCount}
         />
       ) : (
         ""

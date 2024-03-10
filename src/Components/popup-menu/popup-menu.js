@@ -18,10 +18,14 @@ export const PopupMenu = ({
     products,
     loading, 
     setIsLoading,
+    setCurrentPage,
+    currentPage,
+    setResetCount,
+    handldeClick,
 }) => {
 
     const [log, setLog] = useState(1100);
-    const [delayedChosenPrice, setDelayedChosenPrice] = useState(1100);
+    const [delayedChosenPrice, setDelayedChosenPrice] = useState("");
 
   useEffect(() => {
     const delayedFunction = debounce((e) => {
@@ -48,14 +52,21 @@ export const PopupMenu = ({
   };
 
   useEffect(() => {
-    const delayedFunction = setTimeout(() => {
-      setChosenPrice(delayedChosenPrice);
-    }, 500);
+    if (delayedChosenPrice) {
+      const delayedFunction = setTimeout(() => {
+        setChosenPrice(delayedChosenPrice);
+      }, 500);
 
-    return () => {
-      clearTimeout(delayedFunction);
-    };
+      return () => {
+        clearTimeout(delayedFunction);
+      };
+    }
   }, [delayedChosenPrice]);
+
+  const resetFilters = (e) => {
+    handldeClick(e);
+    setResetCount(prevCount => prevCount + 1);
+  }
   
   return (
     <div className="popup-menus">
@@ -120,7 +131,9 @@ export const PopupMenu = ({
             })}
         </div>
         </div>
-        <button className="sort-button">reset</button>
+        <button className="sort-button" 
+        onClick={(e) => resetFilters(e)}
+        >reset</button>
     </div>
   );
 };
