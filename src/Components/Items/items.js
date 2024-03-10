@@ -24,6 +24,8 @@ export const Items = ({
   loading, 
   setIsLoading,
   setResetCount,
+  isFiltered,
+  setIsFiltered,
 }) => {
 
   let itemsList = items.map((item, index) => {
@@ -61,13 +63,15 @@ export const Items = ({
         currentPage={currentPage}
         setResetCount={setResetCount}
         handldeClick={handldeClick}
+        isFiltered={isFiltered}
+        setIsFiltered={setIsFiltered}
       />
       <ul className="myUL">{itemsList}</ul>
-      <Pagination
+      {!isFiltered && <Pagination
         items={items}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         handldeClick={handldeClick}
-      />
+      />}
     </div>);
 };

@@ -68,7 +68,7 @@ export const getIds = ({currentPage}) => {
       })
   };
 
-  export const getFields = ({currentPage, field}) => {
+  export const getFields = ({currentPage, field, limit}) => {
     let offset = currentPage === 1 ? 0 : (currentPage - 1) * 50 + 1;
     // console.log(authString);
     const headers = {
@@ -80,7 +80,7 @@ export const getIds = ({currentPage}) => {
       "params": {
         "field": field,
         "offset": offset,
-        "limit": 9000,
+        "limit": limit,
       },
     };
   

@@ -24,6 +24,7 @@ function App() {
   const [priceIsOpen, setPriceIsOpen] = useState(false);
   const [brandIsOpen, setBrandIsOpen] = useState(false);
   const [resetCount, setResetCount] = useState(0);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   const products = ["кольцо", "колье", "серьги", "браслет", "комплект", "ложка", "кулон", "брошь", "пусеты", "цепочка", "подвес", "бусы", "подстаканник"]
 
@@ -37,13 +38,13 @@ function App() {
     return uniqueObjects
   }
 
-  const sortArray = (arr) => {
-    arr.sort(function(a, b) {
-      return a - b;
-    })
+  // const sortArray = (arr) => {
+  //   arr.sort(function(a, b) {
+  //     return a - b;
+  //   })
 
-    return arr
-  }
+  //   return arr
+  // }
 
   const getUniqueArr = ({arr}) => {
     const uniqueArr = arr.filter((value, index, self) => {
@@ -79,7 +80,6 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log(currentPage);
     setErrorMessage("");
     getIds({currentPage: currentPage})
       .then((res) => {
@@ -101,35 +101,13 @@ function App() {
       .catch((error) => {
         errorProcessing(error);
       })
-      getFields({currentPage: currentPage, field: "brand"})
+      getFields({currentPage: currentPage, field: "brand", limit: 9000})
         .then((res) => {
             // console.log("brands", res);
             return res.result;
         })
         .then((result) => {
             setBrands(getUniqueArr({arr: result}));
-        })
-        .catch((error) => {
-          errorProcessing(error);
-        })
-      getFields({currentPage: currentPage, field: "product"})
-        .then((res) => {
-          // console.log("products", res);
-            return res.result;
-        })
-        .then((result) => {
-            setNames(getUniqueArr({arr: result}));
-        })
-        .catch((error) => {
-          errorProcessing(error);
-        })
-      getFields({currentPage: currentPage, field: "price"})
-        .then((res) => {
-            // console.log("initial", res);
-            return res.result;
-        })
-        .then((result) => {
-            setPrices(sortArray(getUniqueArr({arr: result})));
         })
         .catch((error) => {
           errorProcessing(error);
@@ -141,9 +119,9 @@ function App() {
   //   console.log(ids);
   // }, [ids])
 
-  // useEffect(() => {
-  //   console.log(items);
-  // }, [items])
+  useEffect(() => {
+    console.log(items);
+  }, [items])
 
   // useEffect(() => {
   //   console.log(brands);
@@ -159,6 +137,7 @@ function App() {
 
   useEffect(() => {
     if (!initialRender) {
+      setIsFiltered(true);
       setItems([]);
       setErrorMessage('');
       setIsLoading(true);
@@ -185,6 +164,7 @@ function App() {
 
   useEffect(() => {
     if (!initialRender) {
+      setIsFiltered(true);
       setItems([]);
       setErrorMessage('');
       setIsLoading(true);
@@ -211,6 +191,7 @@ function App() {
 
   useEffect(() => {
     if (!initialRender) {
+      setIsFiltered(true);
       setItems([]);
       setErrorMessage('');
       setIsLoading(true);
@@ -260,6 +241,8 @@ function App() {
           loading={loading}
           setIsLoading={setIsLoading}
           setResetCount={setResetCount}
+          isFiltered={isFiltered}
+          setIsFiltered={setIsFiltered}
         />
       ) : (
         ""

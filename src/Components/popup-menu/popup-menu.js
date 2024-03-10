@@ -22,6 +22,8 @@ export const PopupMenu = ({
     currentPage,
     setResetCount,
     handldeClick,
+    isFiltered,
+    setIsFiltered,
 }) => {
 
     const [log, setLog] = useState(1100);
@@ -47,6 +49,7 @@ export const PopupMenu = ({
   const handleChange = (e) => {
     setBrandIsOpen(false);
     setNameIsOpen(false);
+    setIsFiltered(true);
     setLog(e.target.value);
     setDelayedChosenPrice(Number(e.target.value));
   };
@@ -65,6 +68,7 @@ export const PopupMenu = ({
 
   const resetFilters = (e) => {
     handldeClick(e);
+    setIsFiltered(false);
     setResetCount(prevCount => prevCount + 1);
   }
   
@@ -87,6 +91,7 @@ export const PopupMenu = ({
                     return (
                         <div className="menu-item" key={index}                             onClick={(e) => {
                             setChosenName(item);
+                            setIsFiltered(true);
                             setNameIsOpen(false);
                             }}>
                             {item}
@@ -123,6 +128,7 @@ export const PopupMenu = ({
                     <div className="menu-item" key={index}
                     onClick={(e) => {
                         setChosenBrand(item);
+                        setIsFiltered(true);
                         setBrandIsOpen(false);
                         }}>
                         {item}
