@@ -2,9 +2,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    /* gap: 5px; */
+    gap: 5px;
     /* width: 450px; */
     justify-content: center;
+    align-items: center;
 }
 
 .popup-menu {
@@ -16,17 +17,34 @@
     background-color: #00748f;
     color: white;
     padding: 12px;
-    margin-top: -20px;
+    margin-top: -10px;
     border-color: #dedede #bababa #aaa #bababa;
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
     cursor: pointer;
-    width: 158px;
+    width: 100px;
   }
 
-  input[type=number]::-webkit-inner-spin-button {
-    opacity: 1
+  /* input[type=number]::-webkit-inner-spin-button {
+    opacity: 1;
+  } */
+  .inputWrapper {
+    background-color: #00748f;
+    color: white;
+    margin-top: -9px;
+    border-color: #dedede #bababa #aaa #bababa;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    font-size: small;
+    width: 112px;
+  }
+  .inputPrice {
+    opacity: 1;
+    width: 90px;
+    height: 18px;
+    align-self: center;
   }
   
   .menu-options {
@@ -35,8 +53,8 @@
     background-color: #f9f9f9;
     padding: 12px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    width: 132px;
-    height: 150px;
+    width: 78px;
+    height: 130px;
     overflow: scroll;
   }
   

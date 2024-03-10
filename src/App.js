@@ -139,9 +139,9 @@ function App() {
   //   console.log(ids);
   // }, [ids])
 
-  useEffect(() => {
-    console.log(items);
-  }, [items])
+  // useEffect(() => {
+  //   console.log(items);
+  // }, [items])
 
   // useEffect(() => {
   //   console.log(brands);

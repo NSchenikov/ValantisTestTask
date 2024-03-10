@@ -20,27 +20,6 @@ export const PopupMenu = ({
     setIsLoading,
 }) => {
 
-    // const [log, setLog] = useState("");
-    // const [prevVal, setPrevVal] = useState(1100);
-    // const setLogIfArrowClicked = e => {
-    //     let currentVal = parseInt(e.target.value);
-    //     if (currentVal > prevVal) {
-    //       if (currentVal - prevVal === 100) {
-    //         setLog(`${log}+`);
-    //       } else {
-    //         setLog(`${log}`);
-    //       }
-    //     } else {
-    //       setLog(`${log}`);
-    //     }
-    //     setPrevVal(currentVal);
-    //     setChosenPrice(currentVal);
-    // };
-
-
-
-    // const delayedFunction = (e) => debounce(setLogIfArrowClicked, 5000)(e);
-
     const [log, setLog] = useState(1100);
     const [delayedChosenPrice, setDelayedChosenPrice] = useState(1100);
 
@@ -62,6 +41,8 @@ export const PopupMenu = ({
   }, []);
 
   const handleChange = (e) => {
+    setBrandIsOpen(false);
+    setNameIsOpen(false);
     setLog(e.target.value);
     setDelayedChosenPrice(Number(e.target.value));
   };
@@ -78,6 +59,7 @@ export const PopupMenu = ({
   
   return (
     <div className="popup-menus">
+      Filter:
         <div className="popup-menu">
         <button
             className="sort-button"
@@ -87,7 +69,7 @@ export const PopupMenu = ({
                 setBrandIsOpen(false);
             }}
         >
-            Filter by name
+            by name
         </button>
         <div className={`menu-options ${nameIsOpen ? "open" : ""}`}>
                 {products.map((item, index) => {
@@ -102,13 +84,17 @@ export const PopupMenu = ({
                 })}
         </div>
         </div>
-        <input 
-            type="number" 
-            value={log} 
-            onChange={handleChange}
-            step={100}
-            disabled={loading ? "disabled" : ''}
-        ></input>
+        <div className="inputWrapper">
+          by price
+          <input 
+          className="inputPrice"
+              type="number" 
+              value={log} 
+              onChange={handleChange}
+              step={100}
+              disabled={loading ? "disabled" : ''}
+          ></input>
+        </div>
         <div className="popup-menu">
         <button
             className="sort-button"
@@ -118,7 +104,7 @@ export const PopupMenu = ({
                 setPriceIsOpen(false);
             }}
         >
-            Filter by brand
+            by brand
         </button>
         <div className={`menu-options ${brandIsOpen ? "open" : ""}`}>
             {brands.map((item, index) => {
@@ -134,6 +120,7 @@ export const PopupMenu = ({
             })}
         </div>
         </div>
+        <button className="sort-button">reset</button>
     </div>
   );
 };
