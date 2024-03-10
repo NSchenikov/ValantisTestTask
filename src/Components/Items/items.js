@@ -8,21 +8,17 @@ export const Items = ({
   currentPage, 
   setCurrentPage, 
   handldeClick,           
-  names,
-  prices,
   brands,
   setChosenName,
   setChosenPrice,
   setChosenBrand,
   nameIsOpen,
   setNameIsOpen,
-  priceIsOpen,
   setPriceIsOpen,
   brandIsOpen,
   setBrandIsOpen,
   products,
   loading, 
-  setIsLoading,
   setResetCount,
   isFiltered,
   setIsFiltered,
@@ -44,26 +40,19 @@ export const Items = ({
   return (
     <div>
       <PopupMenu 
-        names={names}
-        prices={prices}
         brands={brands}
         setChosenName={setChosenName}
         setChosenPrice={setChosenPrice}
         setChosenBrand={setChosenBrand}
         nameIsOpen={nameIsOpen}
         setNameIsOpen={setNameIsOpen}
-        priceIsOpen={priceIsOpen}
         setPriceIsOpen={setPriceIsOpen}
         brandIsOpen={brandIsOpen}
         setBrandIsOpen={setBrandIsOpen}
         products={products}
         loading={loading}
-        setIsLoading={setIsLoading}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
         setResetCount={setResetCount}
         handldeClick={handldeClick}
-        isFiltered={isFiltered}
         setIsFiltered={setIsFiltered}
       />
       <ul className="myUL">{itemsList}</ul>

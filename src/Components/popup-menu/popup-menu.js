@@ -1,28 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { debounce } from "lodash";
 import "./popup-menu.css";
 
 export const PopupMenu = ({ 
-    names,
-    prices,
     brands,
     setChosenName,
     setChosenPrice,
     setChosenBrand,
     nameIsOpen,
     setNameIsOpen,
-    priceIsOpen,
     setPriceIsOpen,
     brandIsOpen,
     setBrandIsOpen,
     products,
     loading, 
-    setIsLoading,
-    setCurrentPage,
-    currentPage,
     setResetCount,
     handldeClick,
-    isFiltered,
     setIsFiltered,
 }) => {
 
